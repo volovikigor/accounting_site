@@ -5,20 +5,20 @@
       "destination": "/es"
     },
     {
-      "source": "/([^/]+?)/?",
-      "destination": "/$1/index.html"
+      "source": "/:lang(es|ru|en)",
+      "destination": "/:lang/index.html"
     },
     {
-      "source": "/services/([^/]+?)/?",
-      "destination": "/services/$1/index.html"
+      "source": "/services/:lang(es|ru|en)",
+      "destination": "/services/:lang/index.html"
     },
     {
-      "source": "/team/([^/]+?)/?",
-      "destination": "/team/$1/index.html"
+      "source": "/team/:lang(es|ru|en)",
+      "destination": "/team/:lang/index.html"
     },
     {
-      "source": "/contacts/([^/]+?)/?",
-      "destination": "/contacts/$1/index.html"
+      "source": "/contacts/:lang(es|ru|en)",
+      "destination": "/contacts/:lang/index.html"
     }
   ]
 }
