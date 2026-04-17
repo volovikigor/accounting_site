@@ -1,0 +1,580 @@
+/* src/styles/global.css */
+:root {
+  /* Цветовая схема */
+  --primary-color: #2c5f8a;
+  --primary-dark: #1e3e5c;
+  --secondary-color: #e8b86b;
+  --accent-color: #4a90e2;
+  --text-dark: #333;
+  --text-light: #666;
+  --bg-light: #f5f7fa;
+  --white: #ffffff;
+  --shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+  
+  /* Отступы */
+  --container-padding: 1rem;
+  --section-padding: 4rem 0;
+  
+  /* Шрифты */
+  --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Базовые стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--bg-light);
+}
+
+/* Контейнер - адаптивный */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* Адаптивные отступы для контейнера */
+@media (min-width: 640px) {
+  :root {
+    --container-padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-padding: 2rem;
+  }
+}
+
+/* Шапка сайта */
+.header {
+  background: var(--white);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Навигация */
+.nav {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: var(--primary-color);
+}
+
+/* Адаптивная навигация */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .nav {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background: #d4a54a;
+  transform: translateY(-2px);
+}
+
+/* Секции */
+.section {
+  padding: var(--section-padding);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Карточки услуг */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.service-price {
+  color: var(--secondary-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+/* Команда */
+/* Добавьте или замените существующие стили для team-card */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.team-card {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Контейнер для фото - фиксированный размер, чтобы фото не обрезалось */
+/* Замените существующие стили для team-photo */
+
+.team-photo-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem; /* Добавляем отступы вокруг фото */
+}
+
+.team-photo {
+  width: auto;
+  height: auto;
+  max-width: 65%; /* 35% меньше оригинала = 65% от оригинала */
+  max-height: 250px;
+  object-fit: contain; /* Показывает всё фото целиком */
+  object-position: center;
+  transition: transform 0.3s;
+  border-radius: 8px;
+}
+
+.team-card:hover .team-photo {
+  transform: scale(1.02);
+}
+
+/* Альтернатива - фиксированный размер с пропорциональным уменьшением */
+.team-photo-fixed {
+  width: 65%; /* 35% меньше */
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Альтернатива - contain (показывает всё фото, но могут быть пустые поля) */
+.team-photo-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: var(--bg-light);
+}
+
+.team-card:hover .team-photo {
+  transform: scale(1.05);
+}
+
+/* Информация о сотруднике - выравнивание по левому краю */
+.team-info {
+  padding: 1.5rem;
+  text-align: left; /* Выравнивание текста влево */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-name {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.team-position {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.team-bio {
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.team-contacts {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.team-contacts p {
+  margin: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-contacts a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.team-contacts a:hover {
+  text-decoration: underline;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 640px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-photo-container {
+    height: 250px;
+  }
+  
+  .team-info {
+    padding: 1rem;
+  }
+  .team-photo {
+    max-width: 80%; /* На мобильных чуть больше */
+  }
+}
+/* Футер */
+.footer {
+  background: var(--primary-dark);
+  color: var(--white);
+  padding: 3rem 0 1rem;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+
+.footer-section p {
+  margin: 0.5rem 0;
+  opacity: 0.9;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.875rem;
+  opacity: 0.7;
+}
+
+/* Формы */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Утилиты */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 640px) {
+  .services-grid,
+  .team-grid,
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* Мобильное меню */
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    display: none; /* Скрыто по умолчанию на мобильных */
+  }
+  
+  .nav.active {
+    display: flex;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+  
+  .nav {
+    display: flex !important;
+  }
+}
+/* Добавьте в конец src/styles/global.css */
+
+/* Переключатель языка */
+/* Переключатель языка */
+.language-switcher {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: var(--bg-light);
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.language-switcher a {
+  padding: 0.25rem 0.75rem;
+  text-decoration: none;
+  color: var(--text-dark);
+  border-radius: 6px;
+  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.language-switcher a:hover {
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.language-switcher a.active {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .language-switcher {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+/* Стили для списков в карточках услуг */
+.service-card ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.service-card li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.service-card li::before {
+  content: "✓";
+  color: var(--secondary-color);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Для обычных параграфов */
+.service-card p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+/* Разделитель между параграфами */
+.service-card p + p {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+/* Стили для контента услуг */
+/* Принудительное форматирование для markdown контента */
+.service-description {
+  margin-top: 1rem;
+}
+
+.service-description ul,
+.service-description ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.service-description li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.4;
+  display: list-item;
+}
+
+.service-description li::before {
+  content: "✓";
+  color: var(--secondary-color);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Для обычных параграфов */
+.service-description p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+/* Принудительный перенос строк для markdown */
+.service-description br {
+  display: block;
+  margin: 0.25rem 0;
+  content: "";
+}
+
+/* Для прямого текста без тегов */
+.service-description {
+  white-space: normal;
+}
+
+.service-description > :first-child {
+  margin-top: 0;
+}
+
+.service-description > :last-child {
+  margin-bottom: 0;
+}
