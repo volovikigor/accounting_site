@@ -1,0 +1,136 @@
+---
+// src/pages/team/[lang].astro
+import { t, defaultLocale, locales } from '../../i18n/index';
+import { getCollection } from 'astro:content';
+
+// Получаем язык из параметров маршрута
+export async function getStaticPaths() {
+  return locales.map(locale => ({
+    params: { lang: locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.props;
+const tKey = (key: string) => t(locale, key);
+
+// Загружаем команду для текущего языка
+const collectionName = `team_${locale}`;
+const team = await getCollection(collectionName);
+
+// Отладка
+console.log(`[Team] Current locale: ${locale}`);
+console.log(`[Team] Collection name: ${collectionName}`);
+console.log(`[Team] Team members count: ${team.length}`);
+---
+
+<!DOCTYPE html>
+<html lang={locale}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{tKey('nav.team')} | ContabilidadPro</title>
+    <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href={`/${locale}`} class="logo">📊 ContabilidadPro</a>
+                <nav class="nav">
+                    <a href={`/${locale}`}>{tKey('nav.home')}</a>
+                    <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
+                    <a href={`/team/${locale}`}>{tKey('nav.team')}</a>
+                    <a href={`/contacts/${locale}`}>{tKey('nav.contacts')}</a>
+                </nav>
+                <div class="language-switcher">
+                    <a href="/team/es" class={locale === 'es' ? 'active' : ''}>ES</a>
+                    <a href="/team/ru" class={locale === 'ru' ? 'active' : ''}>RU</a>
+                    <a href="/team/en" class={locale === 'en' ? 'active' : ''}>EN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">{tKey('nav.team')}</h1>
+                
+                {team.length === 0 ? (
+                    <div class="text-center">
+                        <p>
+                            {locale === 'es' && 'No hay miembros del equipo disponibles en este momento.'}
+                            {locale === 'ru' && 'В данный момент члены команды не добавлены.'}
+                            {locale === 'en' && 'No team members available at this time.'}
+                        </p>
+                        <p>
+                            <a href="/admin">
+                                {locale === 'es' ? 'Administrar equipo →' : 
+                                 locale === 'ru' ? 'Управление командой →' : 
+                                 'Manage team →'}
+                            </a>
+                        </p>
+                    </div>
+                ) : (
+                    <div class="team-grid">
+                        {team.map((member) => (
+                            <div class="team-card" key={member.id}>
+                                {member.data.photo && (
+                                    <div class="team-photo-container">
+                                        <img 
+                                            src={member.data.photo} 
+                                            alt={member.data.name}
+                                            class="team-photo"
+                                        />
+                                    </div>
+                                )}
+                                <div class="team-info">
+                                    <h3 class="team-name">{member.data.name}</h3>
+                                    <p class="team-position">{member.data.position}</p>
+                                    {member.data.bio && <p class="team-bio">{member.data.bio}</p>}
+                                    <div class="team-contacts">
+                                        {member.data.email && (
+                                            <p>✉️ <a href={`mailto:${member.data.email}`}>{member.data.email}</a></p>
+                                        )}
+                                        {member.data.phone && (
+                                            <p>📞 <a href={`tel:${member.data.phone}`}>{member.data.phone}</a></p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ContabilidadPro</h3>
+                    <p>{tKey('footer.address')}</p>
+                    <p>📞 {tKey('footer.phone')}</p>
+                    <p>✉️ {tKey('footer.email')}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{tKey('nav.services')}</h3>
+                    <p>✓ {locale === 'es' ? 'Asesoría Contable' : locale === 'ru' ? 'Бухгалтерский консалтинг' : 'Accounting Consulting'}</p>
+                    <p>✓ {locale === 'es' ? 'Declaración de Impuestos' : locale === 'ru' ? 'Налоговые декларации' : 'Tax Returns'}</p>
+                    <p>✓ {locale === 'es' ? 'Gestión Laboral' : locale === 'ru' ? 'Кадровый учет' : 'HR Management'}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
+                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
+                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

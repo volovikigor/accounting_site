@@ -1,0 +1,89 @@
+---
+// src/pages/[slug].astro
+import { getCollection } from 'astro:content';
+import { t, defaultLocale, locales } from '../i18n/index';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { slug: page.data.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const urlParams = Astro.url.searchParams;
+let locale = urlParams.get('lang') || page.data.language;
+
+if (!locales.includes(locale as any)) {
+  locale = page.data.language;
+}
+
+const tKey = (key: string) => t(locale as any, key);
+---
+
+<!DOCTYPE html>
+<html lang={locale}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{page.data.title} | ContabilidadPro</title>
+    <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href={`/?lang=${locale}`} class="logo">📊 ContabilidadPro</a>
+                <nav class="nav">
+                    <a href={`/?lang=${locale}`}>{tKey('nav.home')}</a>
+                    <a href={`/services?lang=${locale}`}>{tKey('nav.services')}</a>
+                    <a href={`/team?lang=${locale}`}>{tKey('nav.team')}</a>
+                    <a href={`/contacts?lang=${locale}`}>{tKey('nav.contacts')}</a>
+                </nav>
+                <div class="language-switcher">
+                    <a href={`/${page.data.slug}?lang=es`} class={locale === 'es' ? 'active' : ''}>ES</a>
+                    <a href={`/${page.data.slug}?lang=ru`} class={locale === 'ru' ? 'active' : ''}>RU</a>
+                    <a href={`/${page.data.slug}?lang=en`} class={locale === 'en' ? 'active' : ''}>EN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">{page.data.title}</h1>
+                <div class="page-content" set:html={page.rendered?.body || page.body} />
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ContabilidadPro</h3>
+                    <p>{tKey('footer.address')}</p>
+                    <p>📞 {tKey('footer.phone')}</p>
+                    <p>✉️ {tKey('footer.email')}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{tKey('nav.services')}</h3>
+                    <p>✓ {locale === 'es' ? 'Asesoría Contable' : locale === 'ru' ? 'Бухгалтерский консалтинг' : 'Accounting Consulting'}</p>
+                    <p>✓ {locale === 'es' ? 'Declaración de Impuestos' : locale === 'ru' ? 'Налоговые декларации' : 'Tax Returns'}</p>
+                    <p>✓ {locale === 'es' ? 'Gestión Laboral' : locale === 'ru' ? 'Кадровый учет' : 'HR Management'}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
+                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
+                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

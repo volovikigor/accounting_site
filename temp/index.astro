@@ -1,0 +1,116 @@
+---
+// src/pages/index.astro
+import { t, defaultLocale, locales } from '../i18n/index';
+
+// Получаем язык из URL
+const urlParams = Astro.url.searchParams;
+let locale = urlParams.get('lang') || defaultLocale;
+
+if (!locales.includes(locale as any)) {
+  locale = defaultLocale;
+}
+
+const tKey = (key: string) => t(locale as any, key);
+---
+
+<!DOCTYPE html>
+<html lang={locale}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{tKey('home.title')} | ContabilidadPro</title>
+    <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href={`/?lang=${locale}`} class="logo">📊 ContabilidadPro</a>
+                <nav class="nav">
+                    <a href={`/?lang=${locale}`}>{tKey('nav.home')}</a>
+                    <a href={`/services?lang=${locale}`}>{tKey('nav.services')}</a>
+                    <a href={`/team?lang=${locale}`}>{tKey('nav.team')}</a>
+                    <a href={`/contacts?lang=${locale}`}>{tKey('nav.contacts')}</a>
+                </nav>
+                <div class="language-switcher">
+                    <a href="/?lang=es" class={locale === 'es' ? 'active' : ''}>ES</a>
+                    <a href="/?lang=ru" class={locale === 'ru' ? 'active' : ''}>RU</a>
+                    <a href="/?lang=en" class={locale === 'en' ? 'active' : ''}>EN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white;">
+            <div class="container text-center">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">{tKey('home.title')}</h1>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">{tKey('home.subtitle')}</p>
+                <a href={`/services?lang=${locale}`} class="btn btn-secondary">
+                    {locale === 'es' ? 'Ver Servicios →' : locale === 'ru' ? 'Посмотреть услуги →' : 'View Services →'}
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">{tKey('home.advantages')}</h2>
+                <div class="services-grid">
+                    {tKey('home.advantagesList').map((advantage: string) => (
+                        <div class="service-card">
+                            <h3>✓ {advantage}</h3>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--white);">
+            <div class="container text-center">
+                <h2 class="section-title">
+                    {locale === 'es' ? '¿Necesitas ayuda con tu contabilidad?' : 
+                     locale === 'ru' ? 'Нужна помощь с бухгалтерией?' : 
+                     'Need help with your accounting?'}
+                </h2>
+                <p style="margin-bottom: 2rem;">
+                    {locale === 'es' ? 'Contáctanos para una consulta gratuita' : 
+                     locale === 'ru' ? 'Свяжитесь с нами для бесплатной консультации' : 
+                     'Contact us for a free consultation'}
+                </p>
+                <a href={`/contacts?lang=${locale}`} class="btn btn-primary">
+                    {locale === 'es' ? 'Contactar ahora' : 
+                     locale === 'ru' ? 'Связаться сейчас' : 
+                     'Contact now'}
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ContabilidadPro</h3>
+                    <p>{tKey('footer.address')}</p>
+                    <p>📞 {tKey('footer.phone')}</p>
+                    <p>✉️ {tKey('footer.email')}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{tKey('nav.services')}</h3>
+                    <p>✓ {locale === 'es' ? 'Asesoría Contable' : locale === 'ru' ? 'Бухгалтерский консалтинг' : 'Accounting Consulting'}</p>
+                    <p>✓ {locale === 'es' ? 'Declaración de Impuestos' : locale === 'ru' ? 'Налоговые декларации' : 'Tax Returns'}</p>
+                    <p>✓ {locale === 'es' ? 'Gestión Laboral' : locale === 'ru' ? 'Кадровый учет' : 'HR Management'}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
+                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
+                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

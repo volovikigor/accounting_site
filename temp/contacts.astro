@@ -1,0 +1,121 @@
+---
+// src/pages/contacts.astro
+import { t, defaultLocale, locales } from '../i18n/index';
+
+// Получаем язык из URL
+const urlParams = Astro.url.searchParams;
+let locale = urlParams.get('lang') || defaultLocale;
+
+if (!locales.includes(locale as any)) {
+  locale = defaultLocale;
+}
+
+const tKey = (key: string) => t(locale as any, key);
+---
+const services = await Astro.glob('../content/services/*.md');
+
+<!DOCTYPE html>
+<html lang={locale}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{tKey('nav.contacts')} | ContabilidadPro</title>
+    <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">📊 ContabilidadPro</a>
+                <nav class="nav">
+                    <a href="/">{tKey('nav.home')}</a>
+                    <a href="/services">{tKey('nav.services')}</a>
+                    <a href="/team">{tKey('nav.team')}</a>
+                    <a href="/contacts">{tKey('nav.contacts')}</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">{tKey('nav.contacts')}</h1>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                    <!-- Контактная информация -->
+                    <div>
+                        <h2>Información de Contacto</h2>
+                        <div style="margin-top: 1.5rem;">
+                            <p><strong>📍 Dirección:</strong><br>{tKey('footer.address')}</p>
+                            <p><strong>📞 Teléfono:</strong><br>{tKey('footer.phone')}</p>
+                            <p><strong>✉️ Email:</strong><br>{tKey('footer.email')}</p>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h3>Horario de Atención</h3>
+                            <p>Lunes a Viernes: 9:00 - 18:00</p>
+                            <p>Sábados: 10:00 - 14:00</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Форма обратной связи -->
+                    <div>
+                        <h2>Envíanos un Mensaje</h2>
+                        <form action="/api/contact" method="POST" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label for="name">Nombre *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Teléfono</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Mensaje *</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ContabilidadPro</h3>
+                    <p>{tKey('footer.address')}</p>
+                    <p>📞 {tKey('footer.phone')}</p>
+                    <p>✉️ {tKey('footer.email')}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Servicios</h3>
+                    <p>✓ Asesoría Contable</p>
+                    <p>✓ Declaración de Impuestos</p>
+                    <p>✓ Gestión Laboral</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Horario</h3>
+                    <p>Lunes - Viernes: 9:00 - 18:00</p>
+                    <p>Sábado: 10:00 - 14:00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+fragment Services_esParts on Services_es {
+  __typename
+  title
+  price
+  image
+  body
+}
+
+fragment Services_ruParts on Services_ru {
+  __typename
+  title
+  price
+  image
+  body
+}
+
+fragment Services_enParts on Services_en {
+  __typename
+  title
+  price
+  image
+  body
+}
+
+fragment Team_esParts on Team_es {
+  __typename
+  name
+  position
+  photo
+  bio
+  email
+  phone
+}
+
+fragment Team_ruParts on Team_ru {
+  __typename
+  name
+  position
+  photo
+  bio
+  email
+  phone
+}
+
+fragment Team_enParts on Team_en {
+  __typename
+  name
+  position
+  photo
+  bio
+  email
+  phone
+}
+
+fragment PagesParts on Pages {
+  __typename
+  title
+  language
+  slug
+  body
+}

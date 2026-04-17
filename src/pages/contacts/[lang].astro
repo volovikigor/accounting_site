@@ -1,0 +1,126 @@
+---
+// src/pages/contacts/[lang].astro
+import { t, defaultLocale, locales } from '../../i18n/index';
+
+// Получаем язык из параметров маршрута
+export async function getStaticPaths() {
+  return locales.map(locale => ({
+    params: { lang: locale },
+    props: { locale }
+  }));
+}
+
+const { locale } = Astro.props;
+const tKey = (key: string) => t(locale, key);
+---
+
+<!DOCTYPE html>
+<html lang={locale}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{tKey('nav.contacts')} | ContabilidadPro</title>
+    <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href={`/${locale}`} class="logo">📊 ContabilidadPro</a>
+                <nav class="nav">
+                    <a href={`/${locale}`}>{tKey('nav.home')}</a>
+                    <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
+                    <a href={`/team/${locale}`}>{tKey('nav.team')}</a>
+                    <a href={`/contacts/${locale}`}>{tKey('nav.contacts')}</a>
+                </nav>
+                <div class="language-switcher">
+                    <a href="/contacts/es" class={locale === 'es' ? 'active' : ''}>ES</a>
+                    <a href="/contacts/ru" class={locale === 'ru' ? 'active' : ''}>RU</a>
+                    <a href="/contacts/en" class={locale === 'en' ? 'active' : ''}>EN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="container">
+                <h1 class="section-title">{tKey('nav.contacts')}</h1>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                    <div>
+                        <h2>{locale === 'es' ? 'Información de Contacto' : locale === 'ru' ? 'Контактная информация' : 'Contact Information'}</h2>
+                        <div style="margin-top: 1.5rem;">
+                            <p><strong>📍 {locale === 'es' ? 'Dirección' : locale === 'ru' ? 'Адрес' : 'Address'}:</strong><br>{tKey('footer.address')}</p>
+                            <p><strong>📞 {locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}:</strong><br>{tKey('footer.phone')}</p>
+                            <p><strong>✉️ Email:</strong><br>{tKey('footer.email')}</p>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h3>{locale === 'es' ? 'Horario de Atención' : locale === 'ru' ? 'Часы работы' : 'Business Hours'}</h3>
+                            <p>{locale === 'es' ? 'Lunes a Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Понедельник - Пятница: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
+                            <p>{locale === 'es' ? 'Sábados: 10:00 - 14:00' : locale === 'ru' ? 'Суббота: 10:00 - 14:00' : 'Saturday: 10:00 - 14:00'}</p>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h2>{locale === 'es' ? 'Envíanos un Mensaje' : locale === 'ru' ? 'Отправьте нам сообщение' : 'Send us a Message'}</h2>
+                        <form action="/api/contact" method="POST" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label for="name">{locale === 'es' ? 'Nombre' : locale === 'ru' ? 'Имя' : 'Name'} *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">{locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">{locale === 'es' ? 'Mensaje' : locale === 'ru' ? 'Сообщение' : 'Message'} *</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                {locale === 'es' ? 'Enviar Mensaje' : locale === 'ru' ? 'Отправить сообщение' : 'Send Message'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ContabilidadPro</h3>
+                    <p>{tKey('footer.address')}</p>
+                    <p>📞 {tKey('footer.phone')}</p>
+                    <p>✉️ {tKey('footer.email')}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{tKey('nav.services')}</h3>
+                    <p>✓ {locale === 'es' ? 'Asesoría Contable' : locale === 'ru' ? 'Бухгалтерский консалтинг' : 'Accounting Consulting'}</p>
+                    <p>✓ {locale === 'es' ? 'Declaración de Impuestos' : locale === 'ru' ? 'Налоговые декларации' : 'Tax Returns'}</p>
+                    <p>✓ {locale === 'es' ? 'Gestión Laboral' : locale === 'ru' ? 'Кадровый учет' : 'HR Management'}</p>
+                </div>
+                <div class="footer-section">
+                    <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
+                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
+                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
