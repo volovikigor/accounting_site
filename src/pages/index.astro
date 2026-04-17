@@ -1,0 +1,7 @@
+---
+// src/pages/index.astro
+import { defaultLocale } from '../i18n/index';
+
+// Перенаправляем на язык по умолчанию
+return Astro.redirect(`/${defaultLocale}`);
+---
