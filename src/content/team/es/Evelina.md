@@ -1,11 +1,9 @@
 ---
-name: Evelina
-position: Assessor Fiscal
+name: Evelina Trubitsina
+position: Asesora Fiscal y Contable
 photo: /uploads/VideoCapture_20241129-102046.jpg
-bio: |-
-  Professional in accounting and taxes with a career spanning across wholesale, logistic, finance services and consulting. Evelina has deep accounting knowledge and complicated cases solving practice from working in various industries and local regulations: Russian, Spain local standards, US GAAP.  
-    Strong commitment to reporting deadlines and reliable, clear and accurate reporting delivery.
-email: evelinatrubitsina@gmail.com
+bio: 'Experto en contabilidad e impuestos con experiencia internacional en CMS, AIG y ETL Global. Ofrece apoyo a pequeñas y medianas empresas en España: contabilidad, presentación de declaraciones fiscales y reducción de riesgos fiscales. Servicios de recuperación contable, planificación fiscal y apoyo continuo en la gestión financiera de empresas y clientes particulares. Experiencia en diferentes sectores y con estándares internacionales. Garantiza la precisión de los informes, el cumplimiento de los plazos y el apoyo en la toma de decisiones financieras seguras para el desarrollo sostenible del negocio.'
+email: tax@evitax.es
 phone: '677656521'
 ---
 

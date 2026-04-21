@@ -1,6 +1,8 @@
 ---
 name: Эмили
-position: Помощник бухгалтера
+position: Ассистент
 photo: /uploads/em2.jpg
-phone: '641015321'
+email: info@evitax.es
+phone: ''
 ---
+

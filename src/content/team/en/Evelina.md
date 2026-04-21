@@ -1,11 +1,10 @@
 ---
-name: Evelina
-position: Tax Consultant
+name: Evelina Trubitsina
+position: 'Tax Consultant, Accountant'
 photo: /uploads/VideoCapture_20241129-102046.jpg
 bio: |
-  Professional in accounting and taxes with a career spanning across wholesale, logistics, finance services and consulting. Evelina has deep accounting knowledge and complicated cases solving practice from working in various industries and local regulations: Russian, Spain local standards, US GAAP.
-  
-  Strong commitment to reporting deadlines and reliable, clear and accurate reporting delivery.
-email: evelinatrubitsina@gmail.com
+  Expert in accounting and taxation with international experience at CMS, AIG, and ETL Global. Providing support to small and medium-sized businesses in Spain: accounting, tax reporting, and reduction of tax risks. Services include bookkeeping recovery, tax planning, and ongoing financial support for companies and private clients. Experience working with various industries and international standards. Ensures accuracy of reporting, timely compliance, and support in making financially sound decisions for sustainable business growth.
+email: tax@evitax.es
 phone: '677656521'
 ---
+
