@@ -2,7 +2,6 @@
 // src/pages/contacts/[lang].astro
 import { t, defaultLocale, locales } from '../../i18n/index';
 
-// Получаем язык из параметров маршрута
 export async function getStaticPaths() {
   return locales.map(locale => ({
     params: { lang: locale },
@@ -18,15 +17,17 @@ const tKey = (key: string) => t(locale, key);
 <html lang={locale}>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{tKey('nav.contacts')} | ContabilidadPro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{tKey('nav.contacts')} | Evitax </title>
     <link rel="stylesheet" href="/src/styles/global.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href={`/${locale}`} class="logo">📊 ContabilidadPro</a>
+                <a href={`/${locale}`} class="logo">
+  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
+</a>
                 <nav class="nav">
                     <a href={`/${locale}`}>{tKey('nav.home')}</a>
                     <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
@@ -47,49 +48,61 @@ const tKey = (key: string) => t(locale, key);
             <div class="container">
                 <h1 class="section-title">{tKey('nav.contacts')}</h1>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
-                    <div>
-                        <h2>{locale === 'es' ? 'Información de Contacto' : locale === 'ru' ? 'Контактная информация' : 'Contact Information'}</h2>
-                        <div style="margin-top: 1.5rem;">
-                            <p><strong>📍 {locale === 'es' ? 'Dirección' : locale === 'ru' ? 'Адрес' : 'Address'}:</strong><br>{tKey('footer.address')}</p>
-                            <p><strong>📞 {locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}:</strong><br>{tKey('footer.phone')}</p>
-                            <p><strong>✉️ Email:</strong><br>{tKey('footer.email')}</p>
-                        </div>
-                        
-                        <div style="margin-top: 2rem;">
-                            <h3>{locale === 'es' ? 'Horario de Atención' : locale === 'ru' ? 'Часы работы' : 'Business Hours'}</h3>
-                            <p>{locale === 'es' ? 'Lunes a Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Понедельник - Пятница: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
-                            <p>{locale === 'es' ? 'Sábados: 10:00 - 14:00' : locale === 'ru' ? 'Суббота: 10:00 - 14:00' : 'Saturday: 10:00 - 14:00'}</p>
+                <div class="contacts-tabs" id="contactsTabs">
+                    <!-- Блок 1: Контактная информация -->
+                    <div class="contact-tab-item">
+                        <button class="contact-tab-button">
+                            <span>📋 {locale === 'es' ? 'Información de Contacto' : locale === 'ru' ? 'Контактная информация' : 'Contact Information'}</span>
+                            <span class="contact-tab-icon">▼</span>
+                        </button>
+                        <div class="contact-tab-content">
+                            <div>
+                                <p><strong>📍 {locale === 'es' ? 'Dirección' : locale === 'ru' ? 'Адрес' : 'Address'}:</strong><br>{tKey('footer.address')}</p>
+                                <p><strong>📞 {locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}:</strong><br>{tKey('footer.phone')}</p>
+                                <p><strong>✉️ Email:</strong><br>{tKey('footer.email')}</p>
+                            </div>
+                            
+                            <div style="margin-top: 2rem;">
+                                <h3>{locale === 'es' ? 'Horario de Atención' : locale === 'ru' ? 'Часы работы' : 'Business Hours'}</h3>
+                                <p>{locale === 'es' ? 'Lunes a Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Понедельник - Пятница: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
+                                <p>{locale === 'es' ? 'Sábados: 10:00 - 14:00' : locale === 'ru' ? 'Суббота: 10:00 - 14:00' : 'Saturday: 10:00 - 14:00'}</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div>
-                        <h2>{locale === 'es' ? 'Envíanos un Mensaje' : locale === 'ru' ? 'Отправьте нам сообщение' : 'Send us a Message'}</h2>
-                        <form action="/api/contact" method="POST" style="margin-top: 1.5rem;">
-                            <div class="form-group">
-                                <label for="name">{locale === 'es' ? 'Nombre' : locale === 'ru' ? 'Имя' : 'Name'} *</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="phone">{locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}</label>
-                                <input type="tel" id="phone" name="phone">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="message">{locale === 'es' ? 'Mensaje' : locale === 'ru' ? 'Сообщение' : 'Message'} *</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">
-                                {locale === 'es' ? 'Enviar Mensaje' : locale === 'ru' ? 'Отправить сообщение' : 'Send Message'}
-                            </button>
-                        </form>
+                    <!-- Блок 2: Форма отправки -->
+                    <div class="contact-tab-item">
+                        <button class="contact-tab-button">
+                            <span>✉️ {locale === 'es' ? 'Envíanos un Mensaje' : locale === 'ru' ? 'Отправьте нам сообщение' : 'Send us a Message'}</span>
+                            <span class="contact-tab-icon">▼</span>
+                        </button>
+                        <div class="contact-tab-content">
+                            <form action="/api/contact" method="POST">
+                                <div class="form-group">
+                                    <label for="name">{locale === 'es' ? 'Nombre' : locale === 'ru' ? 'Имя' : 'Name'} *</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone">{locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}</label>
+                                    <input type="tel" id="phone" name="phone">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message">{locale === 'es' ? 'Mensaje' : locale === 'ru' ? 'Сообщение' : 'Message'} *</label>
+                                    <textarea id="message" name="message" rows="5" required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    {locale === 'es' ? 'Enviar Mensaje' : locale === 'ru' ? 'Отправить сообщение' : 'Send Message'}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,5 +135,35 @@ const tKey = (key: string) => t(locale, key);
             </div>
         </div>
     </footer>
+
+    <script>
+        (function() {
+            function initContactTabs() {
+                var buttons = document.querySelectorAll('.contact-tab-button');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].onclick = function() {
+                        var tabItem = this.closest('.contact-tab-item');
+                        var isActive = tabItem.classList.contains('active');
+                        var allTabs = document.querySelectorAll('.contact-tab-item');
+                        for (var j = 0; j < allTabs.length; j++) {
+                            allTabs[j].classList.remove('active');
+                        }
+                        if (!isActive) {
+                            tabItem.classList.add('active');
+                        }
+                    };
+                }
+                var firstTab = document.querySelector('.contact-tab-item');
+                if (firstTab) {
+                    firstTab.classList.add('active');
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initContactTabs);
+            } else {
+                initContactTabs();
+            }
+        })();
+    </script>
 </body>
 </html>

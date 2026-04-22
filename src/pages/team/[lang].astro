@@ -28,15 +28,17 @@ console.log(`[Team] Team members count: ${team.length}`);
 <html lang={locale}>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{tKey('nav.team')} | ContabilidadPro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{tKey('nav.team')} | Evitax </title>
     <link rel="stylesheet" href="/src/styles/global.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href={`/${locale}`} class="logo">📊 ContabilidadPro</a>
+               <a href={`/${locale}`} class="logo">
+  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
+</a>
                 <nav class="nav">
                     <a href={`/${locale}`}>{tKey('nav.home')}</a>
                     <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
@@ -73,29 +75,39 @@ console.log(`[Team] Team members count: ${team.length}`);
                         </p>
                     </div>
                 ) : (
-                    <div class="team-grid">
-                        {team.map((member) => (
-                            <div class="team-card" key={member.id}>
-                                {member.data.photo && (
-                                    <div class="team-photo-container">
-                                        <img 
-                                            src={member.data.photo} 
-                                            alt={member.data.name}
-                                            class="team-photo"
-                                        />
-                                    </div>
-                                )}
-                                <div class="team-info">
-                                    <h3 class="team-name">{member.data.name}</h3>
-                                    <p class="team-position">{member.data.position}</p>
-                                    {member.data.bio && <p class="team-bio">{member.data.bio}</p>}
-                                    <div class="team-contacts">
-                                        {member.data.email && (
-                                            <p>✉️ <a href={`mailto:${member.data.email}`}>{member.data.email}</a></p>
-                                        )}
-                                        {member.data.phone && (
-                                            <p>📞 <a href={`tel:${member.data.phone}`}>{member.data.phone}</a></p>
-                                        )}
+                    <!-- Team Tabs: на мобильных аккордеон, на десктопе сетка -->
+                    <div class="team-tabs" id="teamTabs">
+                        {team.map((member, index) => (
+                            <div class="team-tab-item" data-index={index}>
+                                <button class="team-tab-button">
+                                    <span class="team-tab-name">{member.data.name}</span>
+                                    <span class="team-tab-position">{member.data.position}</span>
+                                    <span class="team-tab-icon">▼</span>
+                                </button>
+                                <div class="team-tab-content">
+                                    <!-- Фото -->
+                                    {member.data.photo && (
+                                        <div class="team-photo-container">
+                                            <img 
+                                                src={member.data.photo} 
+                                                alt={member.data.name}
+                                                class="team-photo"
+                                            />
+                                        </div>
+                                    )}
+                                    <!-- Информация -->
+                                    <div class="team-info">
+                                        <h3 class="team-name">{member.data.name}</h3>
+                                        <p class="team-position">{member.data.position}</p>
+                                        {member.data.bio && <p class="team-bio">{member.data.bio}</p>}
+                                        <div class="team-contacts">
+                                            {member.data.email && (
+                                                <p>✉️ <a href={`mailto:${member.data.email}`}>{member.data.email}</a></p>
+                                            )}
+                                            {member.data.phone && (
+                                                <p>📞 <a href={`tel:${member.data.phone}`}>{member.data.phone}</a></p>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -132,5 +144,35 @@ console.log(`[Team] Team members count: ${team.length}`);
             </div>
         </div>
     </footer>
+
+    <script>
+        (function() {
+            function initTeamTabs() {
+                var buttons = document.querySelectorAll('.team-tab-button');
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].onclick = function() {
+                        var tabItem = this.closest('.team-tab-item');
+                        var isActive = tabItem.classList.contains('active');
+                        var allTabs = document.querySelectorAll('.team-tab-item');
+                        for (var j = 0; j < allTabs.length; j++) {
+                            allTabs[j].classList.remove('active');
+                        }
+                        if (!isActive) {
+                            tabItem.classList.add('active');
+                        }
+                    };
+                }
+                var firstTab = document.querySelector('.team-tab-item');
+                if (firstTab) {
+                    firstTab.classList.add('active');
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTeamTabs);
+            } else {
+                initTeamTabs();
+            }
+        })();
+    </script>
 </body>
 </html>

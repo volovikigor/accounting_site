@@ -13,27 +13,20 @@ export async function getStaticPaths() {
 }
 
 const { locale } = Astro.props;
-
-// fallback
 const currentLocale = locales.includes(locale) ? locale : defaultLocale;
-
 const tKey = (key: string) => t(currentLocale, key);
 
 // Загружаем услуги
 const collectionName = `services_${currentLocale}`;
 const services = await getCollection(collectionName);
-
-// ❗ НИКАКОГО render() — используем напрямую services
-console.log(`[Services] Locale: ${currentLocale}`);
-console.log(`[Services] Count: ${services.length}`);
 ---
 
 <!DOCTYPE html>
 <html lang={currentLocale}>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{tKey('nav.services')} | ContabilidadPro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>{tKey('nav.services')} | Evitax</title>
   <link rel="stylesheet" href="/src/styles/global.css" />
 </head>
 
@@ -41,15 +34,15 @@ console.log(`[Services] Count: ${services.length}`);
   <header class="header">
     <div class="container">
       <div class="header-content">
-        <a href={`/${currentLocale}`} class="logo">📊 ContabilidadPro</a>
-
+        <a href={`/${locale}`} class="logo">
+  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
+</a>
         <nav class="nav">
           <a href={`/${currentLocale}`}>{tKey('nav.home')}</a>
           <a href={`/services/${currentLocale}`}>{tKey('nav.services')}</a>
           <a href={`/team/${currentLocale}`}>{tKey('nav.team')}</a>
           <a href={`/contacts/${currentLocale}`}>{tKey('nav.contacts')}</a>
         </nav>
-
         <div class="language-switcher">
           <a href="/services/es" class={currentLocale === 'es' ? 'active' : ''}>ES</a>
           <a href="/services/ru" class={currentLocale === 'ru' ? 'active' : ''}>RU</a>
@@ -71,42 +64,25 @@ console.log(`[Services] Count: ${services.length}`);
               {currentLocale === 'ru' && 'В данный момент услуги не добавлены.'}
               {currentLocale === 'en' && 'No services available at this time.'}
             </p>
-
-            <p>
-              <a href="/admin">
-                {currentLocale === 'es'
-                  ? 'Administrar servicios →'
-                  : currentLocale === 'ru'
-                  ? 'Управление услугами →'
-                  : 'Manage services →'}
-              </a>
-            </p>
+            <p><a href="/admin">
+              {currentLocale === 'es' ? 'Administrar servicios →' : currentLocale === 'ru' ? 'Управление услугами →' : 'Manage services →'}
+            </a></p>
           </div>
         ) : (
-          <div class="services-grid">
-            {services.map((service) => (
-              <div class="service-card" key={service.id}>
-                
-                {service.data.image && (
-                  <img
-                    src={service.data.image}
-                    alt={service.data.title}
-                    style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;"
-                  />
-                )}
-
-                <h3>{service.data.title}</h3>
-
-                {service.data.price && (
-                  <div class="service-price">{service.data.price}</div>
-                )}
-
-                {/* ✅ Markdown теперь парсится правильно */}
-                <div 
-                  class="service-description" 
-                  set:html={marked(service.body)} 
-                />
-
+          <div class="services-tabs" id="servicesTabs">
+            {services.map((service, index) => (
+              <div class="tab-item" data-index={index}>
+                <button class="tab-button">
+                  <span class="tab-title">{service.data.title}</span>
+                  {service.data.price && <span class="tab-price">{service.data.price}</span>}
+                  <span class="tab-icon">▼</span>
+                </button>
+                <div class="tab-content">
+                  {service.data.image && (
+                    <img src={service.data.image} alt={service.data.title} class="tab-image" />
+                  )}
+                  <div class="tab-description" set:html={marked(service.body)} />
+                </div>
               </div>
             ))}
           </div>
@@ -118,33 +94,31 @@ console.log(`[Services] Count: ${services.length}`);
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        
         <div class="footer-section">
           <h3>ContabilidadPro</h3>
           <p>{tKey('footer.address')}</p>
           <p>📞 {tKey('footer.phone')}</p>
           <p>✉️ {tKey('footer.email')}</p>
         </div>
-
         <div class="footer-section">
           <h3>{tKey('nav.services')}</h3>
           <p>✓ {currentLocale === 'es' ? 'Asesoría Contable' : currentLocale === 'ru' ? 'Бухгалтерский консалтинг' : 'Accounting Consulting'}</p>
           <p>✓ {currentLocale === 'es' ? 'Declaración de Impuestos' : currentLocale === 'ru' ? 'Налоговые декларации' : 'Tax Returns'}</p>
           <p>✓ {currentLocale === 'es' ? 'Gestión Laboral' : currentLocale === 'ru' ? 'Кадровый учет' : 'HR Management'}</p>
         </div>
-
         <div class="footer-section">
           <h3>{currentLocale === 'es' ? 'Horario' : currentLocale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
           <p>{currentLocale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : currentLocale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
           <p>{currentLocale === 'es' ? 'Sábado: 10:00 - 14:00' : currentLocale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
         </div>
-
       </div>
-
       <div class="footer-bottom">
         <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
       </div>
     </div>
   </footer>
+
+  <!-- Подключаем внешний скрипт для табов -->
+  <script is:inline src="/tabs.js"></script>
 </body>
 </html>

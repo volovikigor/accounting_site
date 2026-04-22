@@ -1,16 +1,18 @@
 /* src/styles/global.css */
 :root {
-  /* Цветовая схема */
-  --primary-color: #2c5f8a;
-  --primary-dark: #1e3e5c;
-  --secondary-color: #e8b86b;
-  --accent-color: #4a90e2;
-  --text-dark: #333;
-  --text-light: #666;
-  --bg-light: #f5f7fa;
+  /* Новая цветовая схема - более глубокая и сильная */
+  --primary-color: #1a4a7a;      /* Глубокий синий */
+  --primary-dark: #0d2b4d;       /* Темно-синий */
+  --primary-light: #2a6a9a;      /* Светло-синий для ховеров */
+  --secondary-color: #f0a500;    /* Яркий золотисто-оранжевый */
+  --secondary-dark: #d48e00;     /* Темный оранжевый для ховеров */
+  --accent-color: #4a90e2;       /* Светло-синий для акцентов */
+  --text-dark: #222;             /* Более насыщенный черный */
+  --text-light: #555;            /* Более насыщенный серый */
+  --bg-light: #f8fafc;           /* Немного другой фон */
   --white: #ffffff;
-  --shadow: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-lg: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.12);
   
   /* Отступы */
   --container-padding: 1rem;
@@ -55,7 +57,7 @@ body {
   }
 }
 
-/* Шапка сайта */
+/* ===== HEADER & NAVIGATION ===== */
 .header {
   background: var(--white);
   box-shadow: var(--shadow);
@@ -97,363 +99,18 @@ body {
   color: var(--primary-color);
 }
 
-/* Адаптивная навигация */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
     text-align: center;
   }
-  
   .nav {
     justify-content: center;
     gap: 1.5rem;
   }
 }
 
-/* Кнопки */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.3s;
-  cursor: pointer;
-  border: none;
-  font-size: 1rem;
-}
-
-.btn-primary {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-.btn-primary:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn-secondary {
-  background: var(--secondary-color);
-  color: var(--text-dark);
-}
-
-.btn-secondary:hover {
-  background: #d4a54a;
-  transform: translateY(-2px);
-}
-
-/* Секции */
-.section {
-  padding: var(--section-padding);
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: var(--primary-color);
-}
-
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 1.5rem;
-  }
-}
-
-/* Карточки услуг */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.service-card {
-  background: var(--white);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-}
-
-.service-card h3 {
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-}
-
-.service-price {
-  color: var(--secondary-color);
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 1rem 0;
-}
-
-/* Команда */
-/* Добавьте или замените существующие стили для team-card */
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.team-card {
-  background: var(--white);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-
-/* Контейнер для фото - фиксированный размер, чтобы фото не обрезалось */
-/* Замените существующие стили для team-photo */
-
-.team-photo-container {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  background: var(--bg-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem; /* Добавляем отступы вокруг фото */
-}
-
-.team-photo {
-  width: auto;
-  height: auto;
-  max-width: 65%; /* 35% меньше оригинала = 65% от оригинала */
-  max-height: 250px;
-  object-fit: contain; /* Показывает всё фото целиком */
-  object-position: center;
-  transition: transform 0.3s;
-  border-radius: 8px;
-}
-
-.team-card:hover .team-photo {
-  transform: scale(1.02);
-}
-
-/* Альтернатива - фиксированный размер с пропорциональным уменьшением */
-.team-photo-fixed {
-  width: 65%; /* 35% меньше */
-  height: auto;
-  max-height: 200px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-/* Альтернатива - contain (показывает всё фото, но могут быть пустые поля) */
-.team-photo-contain {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: var(--bg-light);
-}
-
-.team-card:hover .team-photo {
-  transform: scale(1.05);
-}
-
-/* Информация о сотруднике - выравнивание по левому краю */
-.team-info {
-  padding: 1.5rem;
-  text-align: left; /* Выравнивание текста влево */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.team-name {
-  font-size: 1.25rem;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-.team-position {
-  color: var(--secondary-color);
-  margin-bottom: 1rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.team-bio {
-  color: var(--text-light);
-  line-height: 1.5;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-}
-
-.team-contacts {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
-  font-size: 0.85rem;
-}
-
-.team-contacts p {
-  margin: 0.25rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.team-contacts a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.team-contacts a:hover {
-  text-decoration: underline;
-}
-
-/* Для мобильных устройств */
-@media (max-width: 640px) {
-  .team-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .team-photo-container {
-    height: 250px;
-  }
-  
-  .team-info {
-    padding: 1rem;
-  }
-  .team-photo {
-    max-width: 80%; /* На мобильных чуть больше */
-  }
-}
-/* Футер */
-.footer {
-  background: var(--primary-dark);
-  color: var(--white);
-  padding: 3rem 0 1rem;
-  margin-top: 3rem;
-}
-
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.footer-section h3 {
-  margin-bottom: 1rem;
-  color: var(--secondary-color);
-}
-
-.footer-section p {
-  margin: 0.5rem 0;
-  opacity: 0.9;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  font-size: 0.875rem;
-  opacity: 0.7;
-}
-
-/* Формы */
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
-/* Утилиты */
-.text-center {
-  text-align: center;
-}
-
-.mt-2 {
-  margin-top: 2rem;
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 640px) {
-  .services-grid,
-  .team-grid,
-  .footer-content {
-    grid-template-columns: 1fr;
-  }
-  
-  .btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-/* Мобильное меню */
-@media (max-width: 768px) {
-  .nav {
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    display: none; /* Скрыто по умолчанию на мобильных */
-  }
-  
-  .nav.active {
-    display: flex;
-  }
-  
-  .mobile-menu-toggle {
-    display: block;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobile-menu-toggle {
-    display: none;
-  }
-  
-  .nav {
-    display: flex !important;
-  }
-}
-/* Добавьте в конец src/styles/global.css */
-
-/* Переключатель языка */
-/* Переключатель языка */
+/* ===== LANGUAGE SWITCHER ===== */
 .language-switcher {
   display: flex;
   gap: 0.5rem;
@@ -491,90 +148,543 @@ body {
   }
 }
 
-/* Стили для списков в карточках услуг */
-.service-card ul {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-  list-style-type: none;
+/* ===== BUTTONS ===== */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
 }
 
-.service-card li {
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: var(--secondary-color);
+  color: var(--text-dark);
+}
+.btn-secondary:hover {
+  background: #d4a54a;
+  transform: translateY(-2px);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  padding: var(--section-padding);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .section-title { font-size: 1.5rem; }
+}
+
+/* ===== SERVICES GRID (desktop) ===== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.service-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.service-price {
+  color: var(--secondary-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.service-card ul, .service-description ul {
+  margin: 1rem 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+.service-card li, .service-description li {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
   position: relative;
 }
-
-.service-card li::before {
+.service-card li::before, .service-description li::before {
   content: "✓";
   color: var(--secondary-color);
   position: absolute;
   left: 0;
   font-weight: bold;
 }
-
-/* Для обычных параграфов */
-.service-card p {
+.service-card p, .service-description p {
   margin: 0.5rem 0;
   line-height: 1.5;
 }
 
-/* Разделитель между параграфами */
-.service-card p + p {
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #eee;
-}
-/* Стили для контента услуг */
-/* Принудительное форматирование для markdown контента */
-.service-description {
-  margin-top: 1rem;
+/* ===== TEAM TABS (сохраняем исходный дизайн) ===== */
+
+.team-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
 }
 
-.service-description ul,
-.service-description ol {
+.team-tab-item {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-tab-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.team-tab-button:hover {
+  background: var(--bg-light);
+}
+
+.team-tab-name {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+.team-tab-position {
+  color: var(--secondary-color);
+  font-size: 0.85rem;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.team-tab-icon {
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+  color: #aaa;
+}
+
+.team-tab-content {
+  display: none;
+}
+
+.team-tab-item.active .team-tab-content {
+  display: block;
+}
+
+.team-tab-item.active .team-tab-icon {
+  transform: rotate(180deg);
+}
+
+/* Внутри таба используем исходные стили */
+.team-tab-content .team-photo-container {
+  width: 100%;
+  background: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.team-photo-container {
+  background: #f0f4f8; /* Светло-серый фон вместо bg-light */
+  border-bottom: 1px solid #eef2f6;
+}
+.team-tab-content .team-photo {
+  width: auto;
+  height: auto;
+  max-width: 65%;
+  max-height: 250px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.team-tab-content .team-info {
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.team-tab-content .team-name {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.team-tab-content .team-position {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.team-tab-content .team-bio {
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.team-tab-content .team-contacts {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.team-tab-content .team-contacts p {
+  margin: 0.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-tab-content .team-contacts a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.team-tab-content .team-contacts a:hover {
+  text-decoration: underline;
+}
+
+/* ===== ДЕСКТОПНАЯ ВЕРСИЯ (сетка карточек с исходным дизайном) ===== */
+@media (min-width: 768px) {
+  .team-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .team-tab-button {
+    display: none;
+  }
+  
+  .team-tab-content {
+    display: block !important;
+  }
+  
+  .team-tab-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .team-tab-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .team-tab-item:hover .team-photo {
+    transform: scale(1.02);
+  }
+}
+
+/* ===== TABS FOR SERVICES ===== */
+.services-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.tab-item {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #eef2f6;
+}
+
+.tab-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.tab-button:hover {
+  background: #f8f9fa;
+}
+
+.tab-title {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.tab-price {
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.tab-icon {
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+  color: #aaa;
+}
+
+.tab-content {
+  display: none;
+  padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.tab-item.active .tab-content {
+  display: block;
+}
+
+.tab-item.active .tab-icon {
+  transform: rotate(180deg);
+}
+
+.tab-image {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.tab-description {
+  margin-top: 0.5rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.tab-description ul, .tab-description ol {
   margin: 0.5rem 0;
-  padding-left: 1.5rem;
+  padding-left: 0;
   list-style-type: none;
 }
-
-.service-description li {
+.tab-description li {
   margin: 0.5rem 0;
   padding-left: 1.5rem;
   position: relative;
   line-height: 1.4;
-  display: list-item;
 }
-
-.service-description li::before {
+.tab-description li::before {
   content: "✓";
   color: var(--secondary-color);
   position: absolute;
   left: 0;
   font-weight: bold;
 }
-
-/* Для обычных параграфов */
-.service-description p {
+.tab-description p {
   margin: 0.5rem 0;
   line-height: 1.5;
 }
+.tab-description p + p {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
 
-/* Принудительный перенос строк для markdown */
-.service-description br {
+/* Services desktop */
+@media (min-width: 768px) {
+  .services-tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .tab-button {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    cursor: default;
+    padding: 1.5rem;
+  }
+  .tab-button:hover { background: var(--white); }
+  .tab-title { font-size: 1.25rem; }
+  .tab-price { margin: 0; font-size: 0.9rem; }
+  .tab-icon { display: none; }
+  .tab-content { display: block !important; padding: 0 1.5rem 1.5rem 1.5rem; }
+  .tab-image { max-height: 160px; }
+  .tab-item {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .tab-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+}
+
+/* ===== CONTACT TABS ===== */
+.contacts-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-tab-item {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border: 1px solid #eef2f6;
+}
+
+.contact-tab-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.contact-tab-button:hover { background: #f8f9fa; }
+.contact-tab-title { font-weight: 600; color: var(--primary-color); }
+.contact-tab-icon {
+  font-size: 0.7rem;
+  transition: transform 0.3s;
+  color: #aaa;
+}
+.contact-tab-content { display: none; padding: 0 1.25rem 1.25rem 1.25rem; }
+.contact-tab-item.active .contact-tab-content { display: block; }
+.contact-tab-item.active .contact-tab-icon { transform: rotate(180deg); }
+
+@media (min-width: 768px) {
+  .contacts-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: none;
+  }
+  .contact-tab-button {
+    cursor: default;
+    padding: 0 0 1rem 0;
+    background: transparent;
+    border-bottom: 2px solid #eee;
+  }
+  .contact-tab-button:hover { background: transparent; }
+  .contact-tab-icon { display: none; }
+  .contact-tab-content { display: block !important; padding: 0; }
+  .contact-tab-item {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+/* ===== FORMS ===== */
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
   display: block;
-  margin: 0.25rem 0;
-  content: "";
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
 }
 
-/* Для прямого текста без тегов */
-.service-description {
-  white-space: normal;
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--primary-dark);
+  color: var(--white);
+  padding: 3rem 0 1rem;
+  margin-top: 3rem;
+}
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.footer-section h3 {
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+}
+.footer-section p {
+  margin: 0.5rem 0;
+  opacity: 0.9;
+}
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.875rem;
+  opacity: 0.7;
 }
 
-.service-description > :first-child {
-  margin-top: 0;
-}
+/* ===== UTILITIES ===== */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 2rem; }
 
-.service-description > :last-child {
-  margin-bottom: 0;
+@media (max-width: 640px) {
+  .services-grid, .team-grid, .footer-content {
+    grid-template-columns: 1fr;
+  }
+  .btn { width: 100%; text-align: center; }
+  .team-photo { max-width: 80%; }
 }

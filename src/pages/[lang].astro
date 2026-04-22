@@ -19,14 +19,16 @@ const tKey = (key: string) => t(locale, key);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{tKey('home.title')} | ContabilidadPro</title>
+    <title>{tKey('home.title')} | Exitax </title>
     <link rel="stylesheet" href="/src/styles/global.css">
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <a href={`/${locale}`} class="logo">📊 ContabilidadPro</a>
+                <a href={`/${locale}`} class="logo">
+  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
+</a>
                 <nav class="nav">
                     <a href={`/${locale}`}>{tKey('nav.home')}</a>
                     <a href={`/services/${locale}`}>{tKey('nav.services')}</a>

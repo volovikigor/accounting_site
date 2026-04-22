@@ -1,0 +1,51 @@
+---
+// src/pages/test.astro
+---
+
+<html>
+<head>
+  <title>Test Tabs</title>
+  <style>
+    .tab-item { border: 1px solid #ccc; margin: 10px; }
+    .tab-button { background: #f0f0f0; padding: 10px; cursor: pointer; }
+    .tab-content { display: none; padding: 10px; }
+    .tab-item.active .tab-content { display: block; }
+    .tab-icon { display: inline-block; margin-left: 10px; }
+    .tab-item.active .tab-icon { transform: rotate(180deg); }
+  </style>
+</head>
+<body>
+  <div class="services-tabs">
+    <div class="tab-item">
+      <button class="tab-button">
+        <span>Услуга 1</span>
+        <span class="tab-icon">▼</span>
+      </button>
+      <div class="tab-content">
+        <p>Содержание услуги 1</p>
+      </div>
+    </div>
+    <div class="tab-item">
+      <button class="tab-button">
+        <span>Услуга 2</span>
+        <span class="tab-icon">▼</span>
+      </button>
+      <div class="tab-content">
+        <p>Содержание услуги 2</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab-button').forEach(btn => {
+      btn.onclick = () => {
+        const parent = btn.closest('.tab-item');
+        const isActive = parent.classList.contains('active');
+        document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
+        if (!isActive) parent.classList.add('active');
+      };
+    });
+    document.querySelector('.tab-item')?.classList.add('active');
+  </script>
+</body>
+</html>
