@@ -23,7 +23,7 @@ const services = await getCollection(collectionName);
 // Контактные данные
 const contactInfo = {
   es: {
-    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    address: "Avenida Gabriel Roca 16, Palma de Mallorca, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -32,7 +32,7 @@ const contactInfo = {
     }
   },
   ru: {
-    address: "Авенида Габриэль Рока 16-6, Пальма-де-Мальорка, 07014",
+    address: "Авенида Габриэль Рока 16, Пальма-де-Мальорка, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -41,7 +41,7 @@ const contactInfo = {
     }
   },
   en: {
-    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    address: "Avenida Gabriel Roca 16, Palma de Mallorca, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -52,6 +52,7 @@ const contactInfo = {
 };
 
 const info = contactInfo[locale] || contactInfo.es;
+const currentPath = Astro.url.pathname;
 ---
 
 <!DOCTYPE html>
@@ -67,15 +68,25 @@ const info = contactInfo[locale] || contactInfo.es;
   <header class="header">
     <div class="container">
       <div class="header-content">
-        <a href={`/${locale}`} class="logo">
-  <img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;">
-</a>
-        <nav class="nav">
-          <a href={`/${currentLocale}`}>{tKey('nav.home')}</a>
-          <a href={`/services/${currentLocale}`}>{tKey('nav.services')}</a>
-          <a href={`/team/${currentLocale}`}>{tKey('nav.team')}</a>
-          <a href={`/contacts/${currentLocale}`}>{tKey('nav.contacts')}</a>
-        </nav>
+                <a href={`/${locale}`} class="logo">
+                <span class="logo-icon"><img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;"></span>
+                <span class="logo-text">Evitax</span>
+                <span class="logo-text">Group</span>
+                </a>
+                <nav class="nav">
+                <a href={`/${locale}`} class={currentPath === `/${locale}` || currentPath === `/${locale}/` ? 'active' : ''}>
+                    {tKey('nav.home')}
+                </a>
+                <a href={`/services/${locale}`} class={currentPath.includes(`/services/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.services')}
+                </a>
+                <a href={`/team/${locale}`} class={currentPath.includes(`/team/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.team')}
+                </a>
+                <a href={`/contacts/${locale}`} class={currentPath.includes(`/contacts/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.contacts')}
+                </a>
+                </nav>
         <div class="language-switcher">
           <a href="/services/es" class={currentLocale === 'es' ? 'active' : ''}>ES</a>
           <a href="/services/ru" class={currentLocale === 'ru' ? 'active' : ''}>RU</a>
@@ -153,6 +164,53 @@ const info = contactInfo[locale] || contactInfo.es;
 
 
   <!-- Подключаем внешний скрипт для табов -->
-  <script is:inline src="/tabs.js"></script>
+  <script>
+  (function() {
+    function initTabs() {
+      var buttons = document.querySelectorAll('.tab-button');
+      
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function(e) {
+          var tabItem = this.closest('.tab-item');
+          var isActive = tabItem.classList.contains('active');
+          var allTabs = document.querySelectorAll('.tab-item');
+          
+          for (var j = 0; j < allTabs.length; j++) {
+            allTabs[j].classList.remove('active');
+          }
+          
+          if (!isActive) {
+            tabItem.classList.add('active');
+            
+            // 🆕 Плавный скролл к началу карточки на мобильных
+            if (window.innerWidth < 768) {
+              setTimeout(function() {
+                var headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+                var elementPosition = tabItem.getBoundingClientRect().top;
+                var offsetPosition = elementPosition + window.pageYOffset - headerHeight - 10;
+                
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+              }, 50);
+            }
+          }
+        };
+      }
+      
+      var firstTab = document.querySelector('.tab-item');
+      if (firstTab) {
+        firstTab.classList.add('active');
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTabs);
+    } else {
+      initTabs();
+    }
+  })();
+</script>
 </body>
 </html>

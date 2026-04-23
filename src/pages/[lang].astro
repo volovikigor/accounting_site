@@ -15,7 +15,7 @@ const tKey = (key: string) => t(locale, key);
 // Контактные данные
 const contactInfo = {
   es: {
-    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    address: "Avenida Gabriel Roca 16, Palma de Mallorca, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -24,7 +24,7 @@ const contactInfo = {
     }
   },
   ru: {
-    address: "Авенида Габриэль Рока 16-6, Пальма-де-Мальорка, 07014",
+    address: "Авенида Габриэль Рока 16, Пальма-де-Мальорка, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -33,7 +33,7 @@ const contactInfo = {
     }
   },
   en: {
-    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    address: "Avenida Gabriel Roca 16, Palma de Mallorca, 07014",
     phone: "+34 677 656 521",
     email: "info@evitax.es",
     schedule: {
@@ -44,6 +44,7 @@ const contactInfo = {
 };
 
 const info = contactInfo[locale] || contactInfo.es;
+const currentPath = Astro.url.pathname;
 ---
 
 <!DOCTYPE html>
@@ -59,13 +60,23 @@ const info = contactInfo[locale] || contactInfo.es;
         <div class="container">
             <div class="header-content">
                 <a href={`/${locale}`} class="logo">
-  <img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;">
+  <span class="logo-icon"><img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;"></span>
+  <span class="logo-text">Evitax</span>
+  <span class="logo-text">Group</span>
 </a>
                 <nav class="nav">
-                    <a href={`/${locale}`}>{tKey('nav.home')}</a>
-                    <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
-                    <a href={`/team/${locale}`}>{tKey('nav.team')}</a>
-                    <a href={`/contacts/${locale}`}>{tKey('nav.contacts')}</a>
+                <a href={`/${locale}`} class={currentPath === `/${locale}` || currentPath === `/${locale}/` ? 'active' : ''}>
+                    {tKey('nav.home')}
+                </a>
+                <a href={`/services/${locale}`} class={currentPath.includes(`/services/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.services')}
+                </a>
+                <a href={`/team/${locale}`} class={currentPath.includes(`/team/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.team')}
+                </a>
+                <a href={`/contacts/${locale}`} class={currentPath.includes(`/contacts/${locale}`) ? 'active' : ''}>
+                    {tKey('nav.contacts')}
+                </a>
                 </nav>
                 <div class="language-switcher">
                     <a href="/es" class={locale === 'es' ? 'active' : ''}>ES</a>
