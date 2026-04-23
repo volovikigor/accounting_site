@@ -16,12 +16,51 @@ const tKey = (key: string) => t(locale, key);
 
 // Загружаем команду для текущего языка
 const collectionName = `team_${locale}`;
-const team = await getCollection(collectionName);
+let team = await getCollection(collectionName);    
+
+// Сортируем по полю order (если есть)
+team = team.sort((a, b) => {
+  const orderA = a.data.order || 999;
+  const orderB = b.data.order || 999;
+  return orderA - orderB;
+});
 
 // Отладка
 console.log(`[Team] Current locale: ${locale}`);
 console.log(`[Team] Collection name: ${collectionName}`);
 console.log(`[Team] Team members count: ${team.length}`);
+// Контактные данные
+const contactInfo = {
+  es: {
+    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Lunes a Viernes: 9:00 - 18:00",
+      saturday: "Sábados: 10:00 - 14:00"
+    }
+  },
+  ru: {
+    address: "Авенида Габриэль Рока 16-6, Пальма-де-Мальорка, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Понедельник - Пятница: 9:00 - 18:00",
+      saturday: "Суббота: 10:00 - 14:00"
+    }
+  },
+  en: {
+    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Monday - Friday: 9:00 - 18:00",
+      saturday: "Saturday: 10:00 - 14:00"
+    }
+  }
+};
+
+const info = contactInfo[locale] || contactInfo.es;
 ---
 
 <!DOCTYPE html>
@@ -37,7 +76,7 @@ console.log(`[Team] Team members count: ${team.length}`);
         <div class="container">
             <div class="header-content">
                <a href={`/${locale}`} class="logo">
-  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
+  <img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;">
 </a>
                 <nav class="nav">
                     <a href={`/${locale}`}>{tKey('nav.home')}</a>
@@ -122,10 +161,10 @@ console.log(`[Team] Team members count: ${team.length}`);
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>ContabilidadPro</h3>
-                    <p>{tKey('footer.address')}</p>
-                    <p>📞 {tKey('footer.phone')}</p>
-                    <p>✉️ {tKey('footer.email')}</p>
+                    <h3>EVITAX</h3>
+                    <p>{info.address}</p>
+                    <p>📞 {info.phone}</p>
+                    <p>✉️ {info.email}</p>
                 </div>
                 <div class="footer-section">
                     <h3>{tKey('nav.services')}</h3>
@@ -135,12 +174,12 @@ console.log(`[Team] Team members count: ${team.length}`);
                 </div>
                 <div class="footer-section">
                     <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
-                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
-                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                    <p>{info.schedule.week}</p>
+                    <p>{info.schedule.saturday}</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+                <p>&copy; 2024 EVITAX. {tKey('footer.rights')}</p>
             </div>
         </div>
     </footer>

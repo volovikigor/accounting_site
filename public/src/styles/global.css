@@ -1,15 +1,16 @@
 /* src/styles/global.css */
 :root {
   /* Новая цветовая схема - более глубокая и сильная */
-  --primary-color: #1a4a7a;      /* Глубокий синий */
-  --primary-dark: #0d2b4d;       /* Темно-синий */
-  --primary-light: #2a6a9a;      /* Светло-синий для ховеров */
+  /* Новая цветовая схема - в стиле футера (темно-синий) */
+  --primary-color: #0d2b4d;      /* Основной темно-синий как футер */
+  --primary-dark: #071a2e;       /* Еще темнее для ховеров */
+  --primary-light: #1a4a7a;      /* Светлее для акцентов */
   --secondary-color: #f0a500;    /* Яркий золотисто-оранжевый */
-  --secondary-dark: #d48e00;     /* Темный оранжевый для ховеров */
-  --accent-color: #4a90e2;       /* Светло-синий для акцентов */
-  --text-dark: #222;             /* Более насыщенный черный */
-  --text-light: #555;            /* Более насыщенный серый */
-  --bg-light: #f8fafc;           /* Немного другой фон */
+  --secondary-dark: #d48e00;     /* Темный оранжевый */
+  --accent-color: #2a6a9a;       /* Акцентный синий */
+  --text-dark: #222;
+  --text-light: #555;
+  --bg-light: #f8fafc;
   --white: #ffffff;
   --shadow: 0 2px 8px rgba(0,0,0,0.08);
   --shadow-lg: 0 4px 12px rgba(0,0,0,0.12);
@@ -160,12 +161,21 @@ body {
   font-size: 1rem;
 }
 
+/* Кнопка отправки - цвет как у футера */
 .btn-primary {
-  background: var(--primary-color);
+  background: var(--primary-dark);  /* #0d2b4d - темно-синий как футер */
   color: var(--white);
+  border: none;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
+
 .btn-primary:hover {
-  background: var(--primary-dark);
+  background: #071a2e;  /* Еще темнее при наведении */
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -561,92 +571,200 @@ body {
   }
 }
 
-/* ===== CONTACT TABS ===== */
-.contacts-tabs {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+/* ===== СТИЛИ ДЛЯ СТРАНИЦЫ КОНТАКТОВ И ФОРМЫ ===== */
+
+/* Блок с контактной информацией */
+.contact-info, .contact-schedule {
+  margin-bottom: 1.5rem;
 }
 
-.contact-tab-item {
-  background: var(--white);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  border: 1px solid #eef2f6;
+.contact-info p, .contact-schedule p {
+  margin: 0.75rem 0;
+  line-height: 1.5;
 }
 
-.contact-tab-button {
+.contact-info a, .contact-schedule a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.contact-info a:hover, .contact-schedule a:hover {
+  text-decoration: underline;
+}
+
+.contact-schedule h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+/* ===== СТИЛИ ДЛЯ ФОРМЫ ===== */
+.form-group {
+  margin-bottom: 1.25rem;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.25rem;
-  background: var(--white);
-  border: none;
-  cursor: pointer;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
-  transition: background 0.2s;
+  font-family: var(--font-main);
+  transition: all 0.3s;
+  background: var(--white);
 }
-.contact-tab-button:hover { background: #f8f9fa; }
-.contact-tab-title { font-weight: 600; color: var(--primary-color); }
-.contact-tab-icon {
-  font-size: 0.7rem;
-  transition: transform 0.3s;
-  color: #aaa;
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(26, 74, 122, 0.1);
 }
-.contact-tab-content { display: none; padding: 0 1.25rem 1.25rem 1.25rem; }
-.contact-tab-item.active .contact-tab-content { display: block; }
-.contact-tab-item.active .contact-tab-icon { transform: rotate(180deg); }
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: var(--primary-light);
+}
+
+/* Статус формы */
+.form-status {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.form-status.sending {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-left: 4px solid #1976d2;
+}
+
+.form-status.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+}
+
+.form-status.error {
+  background: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #c62828;
+}
+
+/* Кнопка отправки - темно-синяя как футер */
+
+.btn-primary:disabled {
+  background: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== ТАБЫ ДЛЯ КОНТАКТОВ ===== */
+.contacts-tabs {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .contacts-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .contact-tab-item {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid #eef2f6;
+  }
+  
+  .contact-tab-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: var(--white);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--primary-color);
+  }
+  
+  .contact-tab-button:hover {
+    background: var(--bg-light);
+  }
+  
+  .contact-tab-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s;
+    color: var(--text-light);
+  }
+  
+  .contact-tab-content {
+    display: none;
+    padding: 0 1.25rem 1.25rem 1.25rem;
+  }
+  
+  .contact-tab-item.active .contact-tab-content {
+    display: block;
+  }
+  
+  .contact-tab-item.active .contact-tab-icon {
+    transform: rotate(180deg);
+  }
+}
 
 @media (min-width: 768px) {
   .contacts-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    max-width: none;
+    max-width: 1000px;
+    margin: 0 auto;
   }
+  
   .contact-tab-button {
-    cursor: default;
-    padding: 0 0 1rem 0;
-    background: transparent;
-    border-bottom: 2px solid #eee;
+    display: none;
   }
-  .contact-tab-button:hover { background: transparent; }
-  .contact-tab-icon { display: none; }
-  .contact-tab-content { display: block !important; padding: 0; }
+  
+  .contact-tab-content {
+    display: block !important;
+  }
+  
   .contact-tab-item {
-    background: transparent;
-    box-shadow: none;
-    border: none;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .contact-tab-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Кнопка на десктопе не на всю ширину */
+  .btn-primary {
+    width: auto;
+    min-width: 200px;
   }
 }
 
-/* ===== FORMS ===== */
-.form-group {
-  margin-bottom: 1rem;
-}
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-.form-group input, .form-group textarea {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-.form-group input:focus, .form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
 
 /* ===== FOOTER ===== */
 .footer {

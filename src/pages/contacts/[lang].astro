@@ -11,6 +11,39 @@ export async function getStaticPaths() {
 
 const { locale } = Astro.props;
 const tKey = (key: string) => t(locale, key);
+
+// Контактные данные
+const contactInfo = {
+  es: {
+    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Lunes a Viernes: 9:00 - 18:00",
+      saturday: "Sábados: 10:00 - 14:00"
+    }
+  },
+  ru: {
+    address: "Авенида Габриэль Рока 16-6, Пальма-де-Мальорка, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Понедельник - Пятница: 9:00 - 18:00",
+      saturday: "Суббота: 10:00 - 14:00"
+    }
+  },
+  en: {
+    address: "Avenida Gabriel Roca 16-6, Palma de Mallorca, 07014",
+    phone: "+34 677 656 521",
+    email: "info@evitax.es",
+    schedule: {
+      week: "Monday - Friday: 9:00 - 18:00",
+      saturday: "Saturday: 10:00 - 14:00"
+    }
+  }
+};
+
+const info = contactInfo[locale] || contactInfo.es;
 ---
 
 <!DOCTYPE html>
@@ -18,7 +51,7 @@ const tKey = (key: string) => t(locale, key);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>{tKey('nav.contacts')} | Evitax </title>
+    <title>{tKey('nav.contacts')} | EVITAX</title>
     <link rel="stylesheet" href="/src/styles/global.css">
 </head>
 <body>
@@ -26,8 +59,8 @@ const tKey = (key: string) => t(locale, key);
         <div class="container">
             <div class="header-content">
                 <a href={`/${locale}`} class="logo">
-  <img src="/logo.svg" alt="EVITAX" style="height: 45px; width: auto;">
-</a>
+<img src="/logo_evi_big.png" alt="EVITAX" style="height: 75px; width: auto;">
+                </a>
                 <nav class="nav">
                     <a href={`/${locale}`}>{tKey('nav.home')}</a>
                     <a href={`/services/${locale}`}>{tKey('nav.services')}</a>
@@ -49,35 +82,35 @@ const tKey = (key: string) => t(locale, key);
                 <h1 class="section-title">{tKey('nav.contacts')}</h1>
                 
                 <div class="contacts-tabs" id="contactsTabs">
-                    <!-- Блок 1: Контактная информация -->
+                    <!-- Таб 1: Контактная информация -->
                     <div class="contact-tab-item">
                         <button class="contact-tab-button">
                             <span>📋 {locale === 'es' ? 'Información de Contacto' : locale === 'ru' ? 'Контактная информация' : 'Contact Information'}</span>
                             <span class="contact-tab-icon">▼</span>
                         </button>
                         <div class="contact-tab-content">
-                            <div>
-                                <p><strong>📍 {locale === 'es' ? 'Dirección' : locale === 'ru' ? 'Адрес' : 'Address'}:</strong><br>{tKey('footer.address')}</p>
-                                <p><strong>📞 {locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}:</strong><br>{tKey('footer.phone')}</p>
-                                <p><strong>✉️ Email:</strong><br>{tKey('footer.email')}</p>
+                            <div class="contact-info">
+                                <p><strong>📍 {locale === 'es' ? 'Dirección' : locale === 'ru' ? 'Адрес' : 'Address'}:</strong><br>{info.address}</p>
+                                <p><strong>📞 {locale === 'es' ? 'Teléfono' : locale === 'ru' ? 'Телефон' : 'Phone'}:</strong><br><a href={`tel:${info.phone}`}>{info.phone}</a></p>
+                                <p><strong>✉️ Email:</strong><br><a href={`mailto:${info.email}`}>{info.email}</a></p>
                             </div>
                             
-                            <div style="margin-top: 2rem;">
+                            <div class="contact-schedule">
                                 <h3>{locale === 'es' ? 'Horario de Atención' : locale === 'ru' ? 'Часы работы' : 'Business Hours'}</h3>
-                                <p>{locale === 'es' ? 'Lunes a Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Понедельник - Пятница: 9:00 - 18:00' : 'Monday - Friday: 9:00 - 18:00'}</p>
-                                <p>{locale === 'es' ? 'Sábados: 10:00 - 14:00' : locale === 'ru' ? 'Суббота: 10:00 - 14:00' : 'Saturday: 10:00 - 14:00'}</p>
+                                <p>{info.schedule.week}</p>
+                                <p>{info.schedule.saturday}</p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Блок 2: Форма отправки -->
+                    <!-- Таб 2: Форма отправки сообщения -->
                     <div class="contact-tab-item">
                         <button class="contact-tab-button">
                             <span>✉️ {locale === 'es' ? 'Envíanos un Mensaje' : locale === 'ru' ? 'Отправьте нам сообщение' : 'Send us a Message'}</span>
                             <span class="contact-tab-icon">▼</span>
                         </button>
                         <div class="contact-tab-content">
-                            <form action="/api/contact" method="POST">
+                            <form id="contactForm" action="https://formspree.io/f/myklbazq" method="POST">
                                 <div class="form-group">
                                     <label for="name">{locale === 'es' ? 'Nombre' : locale === 'ru' ? 'Имя' : 'Name'} *</label>
                                     <input type="text" id="name" name="name" required>
@@ -98,7 +131,12 @@ const tKey = (key: string) => t(locale, key);
                                     <textarea id="message" name="message" rows="5" required></textarea>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary">
+                                <!-- Защита от спама -->
+                                <input type="text" name="_gotcha" style="display:none">
+                                
+                                <div id="formStatus" class="form-status" style="display: none;"></div>
+                                
+                                <button type="submit" class="btn btn-primary" id="submitBtn">
                                     {locale === 'es' ? 'Enviar Mensaje' : locale === 'ru' ? 'Отправить сообщение' : 'Send Message'}
                                 </button>
                             </form>
@@ -113,10 +151,10 @@ const tKey = (key: string) => t(locale, key);
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>ContabilidadPro</h3>
-                    <p>{tKey('footer.address')}</p>
-                    <p>📞 {tKey('footer.phone')}</p>
-                    <p>✉️ {tKey('footer.email')}</p>
+                    <h3>EVITAX</h3>
+                    <p>{info.address}</p>
+                    <p>📞 {info.phone}</p>
+                    <p>✉️ {info.email}</p>
                 </div>
                 <div class="footer-section">
                     <h3>{tKey('nav.services')}</h3>
@@ -126,18 +164,19 @@ const tKey = (key: string) => t(locale, key);
                 </div>
                 <div class="footer-section">
                     <h3>{locale === 'es' ? 'Horario' : locale === 'ru' ? 'Часы работы' : 'Schedule'}</h3>
-                    <p>{locale === 'es' ? 'Lunes - Viernes: 9:00 - 18:00' : locale === 'ru' ? 'Пн - Пт: 9:00 - 18:00' : 'Mon - Fri: 9:00 - 18:00'}</p>
-                    <p>{locale === 'es' ? 'Sábado: 10:00 - 14:00' : locale === 'ru' ? 'Сб: 10:00 - 14:00' : 'Sat: 10:00 - 14:00'}</p>
+                    <p>{info.schedule.week}</p>
+                    <p>{info.schedule.saturday}</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 ContabilidadPro. {tKey('footer.rights')}</p>
+                <p>&copy; 2024 EVITAX. {tKey('footer.rights')}</p>
             </div>
         </div>
     </footer>
 
     <script>
         (function() {
+            // Инициализация табов
             function initContactTabs() {
                 var buttons = document.querySelectorAll('.contact-tab-button');
                 for (var i = 0; i < buttons.length; i++) {
@@ -158,10 +197,93 @@ const tKey = (key: string) => t(locale, key);
                     firstTab.classList.add('active');
                 }
             }
+            
+            // AJAX отправка формы
+            function initForm() {
+                var form = document.getElementById('contactForm');
+                if (!form) return;
+                
+                var submitBtn = document.getElementById('submitBtn');
+                var statusDiv = document.getElementById('formStatus');
+                
+                // Определяем язык для сообщений
+                var locale = document.documentElement.lang || 'es';
+                var messages = {
+                    es: {
+                        sending: 'Enviando...',
+                        success: '✓ ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.',
+                        error: '✗ Error al enviar. Por favor, inténtalo de nuevo.',
+                        connectionError: '✗ Error de conexión. Verifica tu internet.'
+                    },
+                    ru: {
+                        sending: 'Отправка...',
+                        success: '✓ Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.',
+                        error: '✗ Ошибка отправки. Пожалуйста, попробуйте снова.',
+                        connectionError: '✗ Ошибка соединения. Проверьте интернет.'
+                    },
+                    en: {
+                        sending: 'Sending...',
+                        success: '✓ Message sent successfully! We will contact you soon.',
+                        error: '✗ Error sending message. Please try again.',
+                        connectionError: '✗ Connection error. Please check your internet.'
+                    }
+                };
+                
+                var t = messages[locale] || messages.es;
+                
+                form.onsubmit = async function(e) {
+                    e.preventDefault();
+                    
+                    // Отключаем кнопку и показываем статус отправки
+                    submitBtn.disabled = true;
+                    var originalText = submitBtn.textContent;
+                    submitBtn.textContent = t.sending;
+                    statusDiv.style.display = 'block';
+                    statusDiv.textContent = t.sending;
+                    statusDiv.className = 'form-status sending';
+                    
+                    var formData = new FormData(form);
+                    
+                    try {
+                        var response = await fetch(form.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        
+                        if (response.ok) {
+                            form.reset();
+                            statusDiv.textContent = t.success;
+                            statusDiv.className = 'form-status success';
+                            
+                            // Скрыть сообщение через 5 секунд
+                            setTimeout(function() {
+                                statusDiv.style.display = 'none';
+                            }, 5000);
+                        } else {
+                            var errorData = await response.json();
+                            statusDiv.textContent = t.error + (errorData.error ? ' ' + errorData.error : '');
+                            statusDiv.className = 'form-status error';
+                        }
+                    } catch (error) {
+                        console.error('Form submission error:', error);
+                        statusDiv.textContent = t.connectionError;
+                        statusDiv.className = 'form-status error';
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
+                };
+            }
+            
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initContactTabs);
+                document.addEventListener('DOMContentLoaded', function() {
+                    initContactTabs();
+                    initForm();
+                });
             } else {
                 initContactTabs();
+                initForm();
             }
         })();
     </script>
